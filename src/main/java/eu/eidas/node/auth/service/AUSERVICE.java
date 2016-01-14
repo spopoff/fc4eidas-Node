@@ -99,6 +99,7 @@ public final class AUSERVICE implements ISERVICEService {
     /**
      * {@inheritDoc}
      */
+    @Override
     public IPersonalAttributeList processCitizenConsent(
             final Map<String, String> parameters, final IEIDASSession session,
             final boolean askConsentType) {
@@ -205,7 +206,7 @@ public final class AUSERVICE implements ISERVICEService {
                 }
                 IPersonalAttributeList pal = new PersonalAttributeList();
                 pal.populate(strPal);
-
+                LOG.debug("Liste des attributs debut="+pal.toString());
                 citizenService.updateAttributeListValues(session, pal);
                 // Derive Attributes to current Format
                 authData.setPersonalAttributeList(pal);
@@ -213,6 +214,7 @@ public final class AUSERVICE implements ISERVICEService {
                         transService.deriveAttributesToFormat(samlService, session, authData,
                                 parameters.get(EIDASParameters.REMOTE_ADDR.toString()));
                 pal = citizenService.updateAttributeList(session, pal);
+                LOG.debug("Liste des attributs apres="+pal.toString());
 
                 // normalizing names to current format
                 IPersonalAttributeList attrList = null;

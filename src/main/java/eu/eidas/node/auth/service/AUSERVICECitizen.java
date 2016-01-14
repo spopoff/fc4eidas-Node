@@ -135,6 +135,7 @@ public final class AUSERVICECitizen implements ISERVICECitizenService {
   /**
    * {@inheritDoc}
    */
+  @Override
     public IPersonalAttributeList updateAttributeList(
         final IEIDASSession session, final IPersonalAttributeList attributeList) {
 
@@ -182,6 +183,7 @@ public final class AUSERVICECitizen implements ISERVICECitizenService {
           !EidasAttributesUtil.checkMandatoryAttributeSets(attributeList)){
             throw new EIDASServiceException(EIDASUtil.getConfig(EIDASErrors.EIDAS_MANDATORY_ATTRIBUTES.errorCode()), EIDASUtil.getConfig(EIDASErrors.EIDAS_MANDATORY_ATTRIBUTES.errorMessage()));
       }
+    LOG.debug("Updated Attributes values="+pal.toString());
 
     authData.setPersonalAttributeList(pal);
     session.put(EIDASParameters.AUTH_REQUEST.toString(), authData);
