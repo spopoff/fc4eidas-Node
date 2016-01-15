@@ -61,6 +61,11 @@ public class EidasNodeMetadataGenerator {
     private String assertionUrl;
     private Properties nodeProps;
     private long validityDuration;
+    private String endPoint;
+
+    public void setEndPoint(String endPoint) {
+        this.endPoint = endPoint;
+    }
 
     public String getSamlConnectorIDP() {
         return samlConnectorIDP;
@@ -149,6 +154,7 @@ public class EidasNodeMetadataGenerator {
                 }
                 MetadataGenerator generator =  generateMetadata(spEngine, idpEngine, url);
                 MetadataConfigParams mcp=generator.getConfigParams();
+                mcp.setEndPoint(endPoint);
                 mcp.setCountryName(country);
                 mcp.setNodeUrl(siteUrl);
                 mcp.setAssuranceLevel(loA);

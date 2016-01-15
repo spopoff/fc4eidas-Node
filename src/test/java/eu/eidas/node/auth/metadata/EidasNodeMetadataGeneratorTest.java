@@ -82,7 +82,7 @@ public class EidasNodeMetadataGeneratorTest {
         generator.setSamlEngineFactory(new EidasSamlEngineFactory());
         generator.setConnectorCountry("CB");
         generator.setConnectorUrl(ENTITY_ID);
-
+        generator.setEndPoint("http://spopoff.com/NodeEidas/colleague");
         String metadata = generator.generateConnectorMetadata();
         assertTrue(metadata.contains("<?xml"));
 
@@ -158,6 +158,7 @@ public class EidasNodeMetadataGeneratorTest {
         generator.setConnectorUrl(ENTITY_ID);
         Properties contactProps=loadContactProps(CONTACT_SOURCE);
         generator.setNodeProps(contactProps);
+        generator.setEndPoint("http://spopoff.com/NodeEidas/colleague");
 
         String metadata = generator.generateConnectorMetadata();
         assertTrue(metadata.contains("<?xml"));

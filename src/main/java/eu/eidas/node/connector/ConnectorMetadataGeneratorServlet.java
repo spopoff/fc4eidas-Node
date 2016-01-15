@@ -52,6 +52,7 @@ public class ConnectorMetadataGeneratorServlet extends AbstractConnectorServlet{
         LOG.debug("connector generator ="+generatorName+" path="+request.getServletPath());
         EidasNodeMetadataGenerator generator = (EidasNodeMetadataGenerator)getApplicationContext().getBean(generatorName);
         PropertiesUtil.checkConnectorActive();
+        generator.setEndPoint(PropertiesUtil.getProperty("endPoint"));
         if(PropertiesUtil.isMetadataEnabled()) {
             response.getOutputStream().print(generator.generateConnectorMetadata());
         }else{
