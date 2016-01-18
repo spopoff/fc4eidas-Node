@@ -57,6 +57,7 @@ public class ServiceMetadataGeneratorServlet extends AbstractConnectorServlet{
             proxy = false;
             LOG.debug("on s'en fout ="+e.getMessage());
         }
+        generator.setEndPoint(PropertiesUtil.getProperty("endPoint"));
         if(PropertiesUtil.isMetadataEnabled()) {
             if(proxy){
                 response.getOutputStream().print(generator.generateServiceMetadata());
