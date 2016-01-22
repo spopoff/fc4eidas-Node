@@ -105,6 +105,7 @@ public class AUSERVICESAMLUtil {
             String metadataAssertionUrl = getSPAssertionURL(spDesc);
             if ((StringUtils.isEmpty(metadataAssertionUrl)
                     || (authnRequest.getAssertionConsumerServiceURL() != null && !authnRequest.getAssertionConsumerServiceURL().equals(metadataAssertionUrl)))) {
+                LOGGER.debug("metadataAssertionUrl="+metadataAssertionUrl+" authnRequest.getAssertionConsumerServiceURL()="+authnRequest.getAssertionConsumerServiceURL());
                 throw new InternalErrorEIDASException(
                         EIDASUtil.getConfig(EIDASErrors.COLLEAGUE_REQ_INVALID_SAML.errorCode()),
                         EIDASUtil.getConfig(EIDASErrors.COLLEAGUE_REQ_INVALID_SAML.errorMessage()));
