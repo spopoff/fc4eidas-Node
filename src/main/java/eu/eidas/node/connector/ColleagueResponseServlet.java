@@ -40,6 +40,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.InvalidParameterException;
 import java.util.Map;
+import java.util.UUID;
+import javax.servlet.http.Cookie;
 
 /**
  * Is invoked when ProxyService wants to pass control to the Connector.

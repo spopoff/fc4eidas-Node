@@ -40,6 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Generic EidasNode servlet ancestor.
@@ -146,6 +147,19 @@ public abstract class AbstractNodeServlet extends HttpServlet {
                     }
                 }
             }
+            //cookie _csrf
+//            request.setAttribute("_csrf_header", "X-CSRF-TOKEN");
+//            UUID idOne = UUID.randomUUID();
+//            LOG.info("generate csrf id="+idOne);
+//            request.setAttribute("_csrf", idOne);
+            response.setHeader("_csrf_header", "X-CSRF-TOKEN");
+            UUID idOne = UUID.randomUUID();
+            UUID idTwo = UUID.randomUUID();
+            getLogger().info("generate csrf id1="+idOne+" id2="+idTwo);
+            Cookie gato = new Cookie("_csrf", idOne.toString());
+            response.addCookie(gato);
+            response.setHeader("X-CSRF-TOKEN", idTwo.toString());
+            
         } else {
             getLogger().warn(LoggingMarkerMDC.SECURITY_FAILURE, "Request or Session is null !");
         }

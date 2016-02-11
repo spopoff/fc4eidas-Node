@@ -217,10 +217,12 @@ public final class AUCONNECTOR implements ICONNECTORService{
         final String authReqCons = EIDASParameters.AUTH_REQUEST.toString();
         final String inRespCons = EIDASParameters.SAML_IN_RESPONSE_TO.toString();
 
-
+        if (!session.isEmpty()){
+            LOG.debug("INFO session.get(authReqCons)="+session.get(authReqCons)+" session.get(inRespCons)="+session.get(inRespCons));
+        }
         if (session.isEmpty() || session.get(authReqCons) == null
                 || session.get(inRespCons) == null) {
-            LOG.info("BUSINESS EXCEPTION : Session is missing or invalid");
+            LOG.warn("BUSINESS EXCEPTION : Session is missing or invalid");
 
             throw new InvalidSessionEIDASException(
                     EIDASUtil.getConfig(EIDASErrors.INVALID_SESSION.errorCode()),
