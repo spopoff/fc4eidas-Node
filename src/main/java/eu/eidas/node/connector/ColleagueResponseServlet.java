@@ -158,7 +158,7 @@ public final class ColleagueResponseServlet extends AbstractConnectorServlet {
       request.setAttribute(NodeBeanNames.SAML_RESPONSE.toString(), sAMLResponse);
       request.setAttribute(NodeBeanNames.RELAY_STATE.toString(), relayState);
       request.setAttribute(NodeBeanNames.SP_URL.toString(),spUrl);
-
+      LOG.debug("Retour avec relayState="+relayState+" via page="+NodeViewNames.EIDAS_CONNECTOR_COLLEAGUE_RESPONSE_REDIRECT.toString());
       RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(NodeViewNames.EIDAS_CONNECTOR_COLLEAGUE_RESPONSE_REDIRECT.toString());
       dispatcher.forward(request,response);
     }catch (ServletException se){

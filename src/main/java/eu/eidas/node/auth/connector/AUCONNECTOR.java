@@ -147,8 +147,11 @@ public final class AUCONNECTOR implements ICONNECTORService{
                 samlService.processAuthenticationRequest(spSamlToken, parameters);
         final String relayStateCons = EIDASParameters.RELAY_STATE.toString();
         if (parameters.containsKey(relayStateCons)) {
-            LOG.trace("Saving relay state.");
-            session.put(relayStateCons, parameters.get(relayStateCons));
+            String rs = parameters.get(relayStateCons);
+            LOG.debug("Saving relay state="+rs);
+            session.put(relayStateCons, rs);
+        }else{
+            LOG.debug("Pas trouve relay state=");
         }
         session.put(EIDASParameters.SP_URL.toString(), authData.getAssertionConsumerServiceURL());
         session.put(EIDASParameters.ERROR_REDIRECT_URL.toString(), authData.getAssertionConsumerServiceURL());
@@ -211,6 +214,7 @@ public final class AUCONNECTOR implements ICONNECTORService{
     /**
      * {@inheritDoc}
      */
+    @Override
     public EIDASAuthnRequest getAuthenticationResponse(
             final Map<String, String> parameters, final IEIDASSession session) {
 
@@ -434,6 +438,7 @@ public final class AUCONNECTOR implements ICONNECTORService{
      * @param parameters
      * @return the plugin response, which can be either the final response or a redirection to the next page (depends on the plugin)
      */
+    @Override
     public String processPluginResponse(final HttpServletRequest request, final HttpServletResponse response, final ServletContext context, final IEIDASSession eidasSession, final Map<String, String> parameters){
         CountrySpecificService specificCountry= getCountryHandler(request);
         if(specificCountry==null) {

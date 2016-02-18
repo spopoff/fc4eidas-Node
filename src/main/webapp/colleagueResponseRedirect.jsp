@@ -29,16 +29,16 @@
                     <h2 class="sub-title"><fmt:message key="ConnectorRedirect.text" bundle="${i18n_eng}"/></h2>
                     <form name="redirectForm" method="post" action="${e:forHtml(spUrl)}">
                         <input type="hidden" id="SAMLResponse" name="SAMLResponse" value="${e:forHtml(SAMLResponse)}"/>
-                        <c:if test="RelayState!=null">
+                        <!--<c:if test="RelayState!=null">-->
                             <input type="hidden" id="relayState" name="RelayState" value="${e:forHtml(RelayState)}"/>
-                        </c:if>
+                        <!--</c:if>-->
                     </form>
                     <noscript>
                         <form name="redirectForm" method="post" action="${e:forHtml(spUrl)}">
                             <input type="hidden" id="SAMLResponse" name="SAMLResponse" value="${e:forHtml(SAMLResponse)}"/>
-                            <c:if test="RelayState!=null">
+                            <!--<c:if test="RelayState!=null">-->
                                 <input type="hidden" id="relayState" name="RelayState" value="${e:forHtml(RelayState)}"/>
-                            </c:if>
+                            <!--</c:if>-->
                             <p class="box-btn">
                                 <input type="submit" id="redirectValue_button" class="btn btn-next" value="<fmt:message key='accept.button' bundle="${i18n_eng}"/>"/>
                             </p>

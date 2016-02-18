@@ -35,9 +35,6 @@ import eu.eidas.auth.engine.metadata.MetadataProcessorI;
 import eu.eidas.auth.engine.metadata.MetadataUtil;
 import eu.eidas.engine.exceptions.SAMLEngineException;
 import eu.eidas.engine.exceptions.EIDASSAMLEngineException;
-import eu.eidas.impl.file.FileService;
-import eu.eidas.node.ApplicationContextProvider;
-import eu.eidas.node.auth.metadata.MetadataAgregator;
 import eu.eidas.node.init.EidasSamlEngineFactory;
 import eu.eidas.node.logging.LoggingMarkerMDC;
 import eu.eidas.node.utils.EidasNodeErrorUtil;
@@ -481,6 +478,7 @@ public final class AUCONNECTORSAML implements ICONNECTORSAMLService {
     /**
      * {@inheritDoc}
      */
+        @Override
     public EIDASAuthnRequest processAuthenticationResponse(
             final byte[] samlToken, final EIDASAuthnRequest authData,
             final EIDASAuthnRequest spAuthData, final String remoteAddr) {
@@ -630,6 +628,7 @@ public final class AUCONNECTORSAML implements ICONNECTORSAMLService {
     /**
      * {@inheritDoc}
      */
+        @Override
     public byte[] generateAuthenticationResponse(
             final EIDASAuthnRequest authData, final String ipUserAddress) {
         EIDASSAMLEngine engine=null;

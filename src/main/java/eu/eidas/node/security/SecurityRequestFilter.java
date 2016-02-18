@@ -61,7 +61,7 @@ public class SecurityRequestFilter  extends AbstractSecurityRequest implements F
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-
+        LOG.debug("Filtered path="+pathInvoked);
         // get domain
         String domain = request.getHeader(EIDASValues.REFERER.toString());
 
