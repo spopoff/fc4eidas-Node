@@ -18,6 +18,7 @@ import eu.eidas.auth.commons.EIDASUtil;
 import eu.eidas.auth.engine.AbstractSAMLEngine;
 import eu.eidas.auth.engine.SAMLEngineUtils;
 import eu.eidas.auth.engine.EIDASSAMLEngine;
+import eu.eidas.auth.engine.metadata.EasySSLProtocolSocketFactory;
 import eu.eidas.auth.engine.metadata.EntityDescriptorContainer;
 import eu.eidas.auth.engine.metadata.MetadataProcessorI;
 import eu.eidas.engine.exceptions.SAMLEngineException;
@@ -37,6 +38,8 @@ import java.security.KeyStore;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
 
 /**
  * retrieves and check metadata
@@ -103,7 +106,7 @@ public class NODEMetadataProcessor implements MetadataProcessorI, IStaticMetadat
         if(entityDescriptor==null && isHttpMetadataRetrieval() && allowMetadataUrl(url)) {
             try {
                 LOG.debug("Trying to get metadata from url " + url);
-                NODEHttpMetadataProvider provider = new NODEHttpMetadataProvider(null, new HttpClient(), url);
+                NODEHttpMetadataProvider provider = new NODEHttpMetadataProvider(null, freeTLS(), url);
                 provider.setParserPool(AbstractSAMLEngine.getNewBasicSecuredParserPool());
                 provider.initialize();
                 XMLObject metadata = provider.getMetadata();
@@ -136,10 +139,19 @@ public class NODEMetadataProcessor implements MetadataProcessorI, IStaticMetadat
         return entityDescriptor;
 
     }
+    private HttpClient freeTLS() {
+        Protocol easyhttps = new Protocol("https", (ProtocolSocketFactory)new EasySSLProtocolSocketFactory(), 443);
+        Protocol.registerProtocol("https", easyhttps);
+        HttpClient httpsClient = new HttpClient();
+        return httpsClient;
+    }
 
     private boolean allowMetadataUrl(String url) throws SAMLEngineException{
-        if(restrictHttp && (url==null || !url.toLowerCase().startsWith("https://"))){
+        if(url==null){
             throw new SAMLEngineException(EIDASErrors.SAML_ENGINE_INVALID_METADATA_SOURCE.errorCode(), EIDASErrors.SAML_ENGINE_INVALID_METADATA_SOURCE.errorMessage());
+        }
+        if(restrictHttp &&  !url.toLowerCase().startsWith("https://")){
+            LOG.warn("metadata pas vraiment dans le bon protocol restrictHttp="+restrictHttp+" url="+url);
         }
         return true;
     }

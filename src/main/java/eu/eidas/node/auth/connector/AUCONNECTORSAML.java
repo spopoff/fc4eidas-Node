@@ -579,12 +579,13 @@ public final class AUCONNECTORSAML implements ICONNECTORSAMLService {
     private void checkServiceCountryToCitizenCountry(byte[] samlToken, EIDASAuthnRequest authData, EIDASAuthnResponse authnResponse) {
         if (checkCitizenCertificateServiceCertificate && !authData.getCitizenCountryCode().equals(authnResponse.getCountry())){
             LOG.warn("ERROR : Signing country for Service " + authnResponse.getCountry() + " is not the same than the citizen country code " + authData.getCitizenCountryCode());
-            prepareReqLoggerBean(EIDASValues.SP_REQUEST.toString(), samlToken,
-                    authData, authData.getSamlId());
-            this.saveLog(AUCONNECTORSAML.LOGGER_COM_REQ);
-            throw new InvalidSessionEIDASException(
-                    EIDASUtil.getConfig(EIDASErrors.INVALID_RESPONSE_COUNTRY_ISOCODE.errorCode()),
-                    EIDASUtil.getConfig(EIDASErrors.INVALID_RESPONSE_COUNTRY_ISOCODE.errorMessage()));
+            authnResponse.setCountry(authData.getCitizenCountryCode());
+//            prepareReqLoggerBean(EIDASValues.SP_REQUEST.toString(), samlToken,
+//                    authData, authData.getSamlId());
+//            this.saveLog(AUCONNECTORSAML.LOGGER_COM_REQ);
+//            throw new InvalidSessionEIDASException(
+//                    EIDASUtil.getConfig(EIDASErrors.INVALID_RESPONSE_COUNTRY_ISOCODE.errorCode()),
+//                    EIDASUtil.getConfig(EIDASErrors.INVALID_RESPONSE_COUNTRY_ISOCODE.errorMessage()));
         }
     }
 
